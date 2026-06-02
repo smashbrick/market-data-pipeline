@@ -1,0 +1,1 @@
+print("Market Data Pipeline starting...")
