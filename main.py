@@ -26,7 +26,7 @@ def normalize(raw: dict) -> Trade:
   )
 
 
-async def connect():
+async def connect(queue):
   while True:
     try:
       print("Connecting to websocket...")
@@ -38,9 +38,8 @@ async def connect():
           message = await ws.recv()
           raw = json.loads(message)
           trade = normalize(raw)
+          await queue.put(trade)  
 
-
-          print(trade)
     
     except websockets.ConnectionClosed as e:
       print(f"Connection closed: {e}. Reconnecting...")
@@ -53,4 +52,17 @@ async def connect():
    
 
 
-asyncio.run(connect())
+async def consumer(queue):
+    while True:
+        trade = await queue.get()
+        print(trade)
+
+async def main():
+    queue = asyncio.Queue()
+    await asyncio.gather(
+        connect(queue),
+        consumer(queue)
+    )
+
+asyncio.run(main())
+
