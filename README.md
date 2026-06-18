@@ -47,9 +47,5 @@ There's network and processing lag between a trade happening and Binance packagi
 
 Working on setting up docker now for timescaleDB
 
-nkiths-MacBook-Air market-data-pipeline % docker run -d \
- --name timescaledb \
- -p 5433:5432 \
- -e POSTGRES_PASSWORD=password \
- timescale/timescaledb:latest-pg16
-Unable to find image 'timescale/timescaledb:latest-pg16' locally
+
+
